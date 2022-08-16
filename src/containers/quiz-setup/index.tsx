@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { getQuizQuestions } from "../../api-client/services/setup-quiz";
 import PrimaryButton from "../../components/common/button";
 import { QuizSetupContainer } from "./style";
 
 export interface FormValuesTypes {
   numberOfQuestions: number;
-  questionCategory: string;
-  questionDifficulty: string;
-  questionsType: string;
+  questionCategory?: string;
+  questionDifficulty?: string;
+  questionsType?: string;
 }
 
 const QuizSetup = () => {
@@ -17,11 +18,18 @@ const QuizSetup = () => {
     questionsType: "any",
   };
 
+  const getQuiz = async (formValues: FormValuesTypes) => {
+    const response = await getQuizQuestions(formValues);
+    console.log(response);
+  };
+
   const [formValues, setFormValues] = useState<FormValuesTypes>(
     () => initialFormValues
   );
 
   const handleOnChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    // console.log(e.target.value);
+
     setFormValues((prevState: any) => {
       return { ...prevState, [e.target.name]: e.target.value };
     });
@@ -31,7 +39,7 @@ const QuizSetup = () => {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
-    console.log(formValues);
+    getQuiz(formValues);
   };
 
   return (
@@ -44,7 +52,7 @@ const QuizSetup = () => {
             </label>
             <select
               name="numberOfQuestions"
-              id="numberOfQuestions"
+              // id="numberOfQuestions"
               value={formValues?.numberOfQuestions}
               onChange={handleOnChange}
             >
@@ -62,7 +70,7 @@ const QuizSetup = () => {
             <label htmlFor="numberOfQuestions">Select Category</label>
             <select
               name="questionCategory"
-              id="numberOfQuestions"
+              // id="numberOfQuestions"
               className=""
               value={formValues?.questionCategory}
               onChange={handleOnChange}
@@ -103,7 +111,7 @@ const QuizSetup = () => {
             <label htmlFor="numberOfQuestions">Select Difficulty</label>
             <select
               name="questionDifficulty"
-              id="numberOfQuestions"
+              // id="numberOfQuestions"
               className=""
               value={formValues?.questionDifficulty}
               onChange={handleOnChange}
@@ -119,7 +127,7 @@ const QuizSetup = () => {
             <label htmlFor="numberOfQuestions">Select Type</label>
             <select
               name="questionsType"
-              id="numberOfQuestions"
+              // id="numberOfQuestions"
               className=""
               value={formValues?.questionsType}
               onChange={handleOnChange}
