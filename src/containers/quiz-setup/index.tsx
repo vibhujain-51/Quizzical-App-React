@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { getQuizQuestions } from "../../api-client/services/setup-quiz";
+import { useNavigate } from "react-router-dom";
+import {
+  getQuizQuestions,
+  getSessionToken,
+} from "../../api-client/services/setup-quiz";
 import PrimaryButton from "../../components/common/button";
+import { useApplicationContext } from "../../context/application-context";
 import { QuizSetupContainer } from "./style";
 
 export interface FormValuesTypes {
@@ -11,6 +16,9 @@ export interface FormValuesTypes {
 }
 
 const QuizSetup = () => {
+  const navigate = useNavigate();
+  const { token } = useApplicationContext();
+
   const initialFormValues: FormValuesTypes = {
     numberOfQuestions: 5,
     questionCategory: "any",
@@ -18,14 +26,20 @@ const QuizSetup = () => {
     questionsType: "any",
   };
 
-  const getQuiz = async (formValues: FormValuesTypes) => {
-    const response = await getQuizQuestions(formValues);
-    console.log(response);
-  };
-
   const [formValues, setFormValues] = useState<FormValuesTypes>(
     () => initialFormValues
   );
+
+  // useEffect(() => {
+  //   if (!token) {
+  //     navigate(-1);
+  //   }
+  // }, []);
+
+  const getQuiz = async (formValues: FormValuesTypes) => {
+    const response = await getQuizQuestions(formValues, token);
+    console.log(response);
+  };
 
   const handleOnChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     // console.log(e.target.value);
@@ -44,17 +58,19 @@ const QuizSetup = () => {
 
   return (
     <QuizSetupContainer>
+      <div className="quiz-setup-heading-wrapper">QUIZ SETUP</div>
       <form>
         <div className="form-items-container">
           <div className="form-items-wrapper number-of-questions-wrapper">
-            <label htmlFor="numberOfQuestions">
-              Select number of Questions
-            </label>
+            <div className="select-info-text-wrapper">
+              SELECT NUMBER OF QUESTIONS
+            </div>
             <select
               name="numberOfQuestions"
-              // id="numberOfQuestions"
+              id="numberOfQuestions"
               value={formValues?.numberOfQuestions}
               onChange={handleOnChange}
+              className="input-select"
             >
               {[5, 10, 15, 20, 25, 30, 35, 40, 45, 50].map((item, index) => {
                 return (
@@ -67,11 +83,11 @@ const QuizSetup = () => {
           </div>
 
           <div className="form-items-wrapper">
-            <label htmlFor="numberOfQuestions">Select Category</label>
+            <div className="select-info-text-wrapper">SELECT CATEGORY</div>
             <select
               name="questionCategory"
               // id="numberOfQuestions"
-              className=""
+              className="input-select"
               value={formValues?.questionCategory}
               onChange={handleOnChange}
             >
@@ -108,11 +124,11 @@ const QuizSetup = () => {
           </div>
 
           <div className="form-items-wrapper">
-            <label htmlFor="numberOfQuestions">Select Difficulty</label>
+            <div className="select-info-text-wrapper">SELECT DIFFICULTY</div>
             <select
               name="questionDifficulty"
               // id="numberOfQuestions"
-              className=""
+              className="input-select"
               value={formValues?.questionDifficulty}
               onChange={handleOnChange}
             >
@@ -124,11 +140,11 @@ const QuizSetup = () => {
           </div>
 
           <div className="form-items-wrapper">
-            <label htmlFor="numberOfQuestions">Select Type</label>
+            <div className="select-info-text-wrapper">SELECT TYPE</div>
             <select
               name="questionsType"
               // id="numberOfQuestions"
-              className=""
+              className="input-select"
               value={formValues?.questionsType}
               onChange={handleOnChange}
             >
@@ -139,8 +155,14 @@ const QuizSetup = () => {
           </div>
           <div className="submit-btn-wrapper">
             <PrimaryButton
-              text="Confirm &amp; Start Quiz "
-              width="200px"
+              text="Confirm &amp; Start Quiz"
+              backgroundColor="#f2ff43"
+              fontWeight="800"
+              fontSize="20px"
+              boxShadow="0px 4px 4px #ff8c5b"
+              width="fit-content"
+              height="fit-content"
+              padding="20px"
               onClick={handleSubmitQuizSetupForm}
             />
           </div>

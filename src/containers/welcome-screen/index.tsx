@@ -2,13 +2,18 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { BottomBlueGraphics, TopYellowGraphics } from "../../assets/graphics";
 import PrimaryButton from "../../components/common/button";
+import { useApplicationContext } from "../../context/application-context";
 import { WelcomeScreenContainer } from "./style";
 
 const WelcomeScreen = () => {
+  const { getToken } = useApplicationContext();
   const navigate = useNavigate();
 
-  const handleStartQuiz = () => {
-    navigate("quiz-setup");
+  const handleStartQuiz = async () => {
+    const response = await getToken();
+    if (response) {
+      navigate("quiz-setup");
+    }
   };
 
   return (

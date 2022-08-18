@@ -18,14 +18,14 @@ export const resetSessionToken = async (expiredToken:string)=>{
     return response
 }
 
-export const getQuizQuestions = async (formValues:FormValuesTypes)=>{
+export const getQuizQuestions = async (formValues:FormValuesTypes,token:string)=>{
     
     const {numberOfQuestions,questionCategory,questionDifficulty,questionsType} = formValues
 
     try{
-        const response = await getSessionToken();
-        if(response.data){
-            const tokenUrl = ApiEndPoints.QuizSetup.getToken(response.data.token)
+        // const response = await getSessionToken();
+        if(token){
+            const tokenUrl = ApiEndPoints.QuizSetup.getToken(token)
             const secondaryBaseUrl = ApiEndPoints.SecondaryUrl.getSecondaryUrl();
 
             if(questionCategory==="any" && questionDifficulty==="any" && questionsType==="any"){
@@ -75,7 +75,8 @@ const getOnlyQuestion = async(tokenUrl:string,
         
         const url = ApiEndPoints.QuizSetup.getQuizWithOnlyQuestionUrl(numOfQuestions);
         const response = await apiClientServices.get(`${secondaryBaseUrl}${url}${tokenUrl}`);
-        return response
+        if(response.data.response_code===0){return response}
+        
     }
 
 const getQuestionOnlyWithCategory = async(tokenUrl:string,

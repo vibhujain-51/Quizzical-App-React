@@ -25,7 +25,7 @@ export class ApiEndPoints {
     },
 
     getQuizWithQuestionAndOnlyTypeUrl(numberOfQuestion: number, type: string) {
-      return `amount=${numberOfQuestion}&difficulty=${type}`;
+      return `amount=${numberOfQuestion}&type=${type}`;
     },
 
     getQuizWithQuestionCategoryAndDifficultyUrl(
