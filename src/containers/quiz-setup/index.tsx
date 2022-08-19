@@ -15,9 +15,30 @@ export interface FormValuesTypes {
   questionsType?: string;
 }
 
+export interface StructuredQuestionType {
+  question: string;
+  option: string[];
+  correctAnswer: string;
+  difficulty: string;
+  category: string;
+  type: string;
+}
+
+// let value: StructuredQuestionType = {
+//   question: "",
+//   option: [],
+//   correctAnswer: "",
+//   difficulty: "",
+//   category: "",
+//   type: "",
+// };
+
 const QuizSetup = () => {
   const navigate = useNavigate();
   const { token } = useApplicationContext();
+  // const [structuredQuestions, setStructuredQuestions] = useState<
+  //   StructuredQuestionType[]
+  // >([value]);
 
   const initialFormValues: FormValuesTypes = {
     numberOfQuestions: 5,
@@ -36,9 +57,34 @@ const QuizSetup = () => {
   //   }
   // }, []);
 
+  // console.log(structuredQuestions);
+
   const getQuiz = async (formValues: FormValuesTypes) => {
     const response = await getQuizQuestions(formValues, token);
     console.log(response);
+    let tempArray: StructuredQuestionType[] = [];
+    response?.data.results.map((item: any) => {
+      let options = [...item.incorrect_answers];
+      options.push(item.correct_answer);
+      let tempObj: StructuredQuestionType = {
+        question: item.question,
+        option: [...options],
+        correctAnswer: item.correct_answer,
+        category: item.category,
+        difficulty: item.difficulty,
+        type: item.type,
+      };
+      // value.question = item.question;
+      // value.option = [...options];
+      // value.correctAnswer = item.correct_answer;
+      // value.category = item.category;
+      // value.difficulty = item.difficulty;
+      // value.type = item.type;
+      tempArray.push(tempObj);
+    });
+    console.log(tempArray);
+    // await setStructuredQuestions(tempArray);
+    return tempArray;
   };
 
   const handleOnChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -49,11 +95,16 @@ const QuizSetup = () => {
     });
   };
 
-  const handleSubmitQuizSetupForm = (
+  const handleSubmitQuizSetupForm = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
-    getQuiz(formValues);
+    const response = await getQuiz(formValues);
+    // console.log(response);
+    // console.log(response);
+    if (response) {
+      navigate("/main-quiz", { state: response });
+    }
   };
 
   return (
