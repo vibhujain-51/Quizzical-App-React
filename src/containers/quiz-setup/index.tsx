@@ -1,3 +1,4 @@
+import { nanoid } from "nanoid";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -16,12 +17,22 @@ export interface FormValuesTypes {
 }
 
 export interface StructuredQuestionType {
-  question: string;
-  option: string[];
+  question: Question;
+  option: Options[];
   correctAnswer: string;
   difficulty: string;
   category: string;
   type: string;
+}
+
+export interface Options {
+  option: string;
+  optionId: string;
+}
+
+export interface Question {
+  question: string;
+  questionId: string;
 }
 
 // let value: StructuredQuestionType = {
@@ -51,13 +62,32 @@ const QuizSetup = () => {
     () => initialFormValues
   );
 
-  // useEffect(() => {
-  //   if (!token) {
-  //     navigate(-1);
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (!token) {
+      navigate(-1);
+    }
+  }, []);
 
   // console.log(structuredQuestions);
+
+  const structureOption = (value: string[]) => {
+    let tempOptionArray: Options[] = [];
+    value.map((item) => {
+      let tempOption: Options = {
+        option: item,
+        optionId: nanoid(),
+      };
+      tempOptionArray.push(tempOption);
+      for (let i = tempOptionArray.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [tempOptionArray[i], tempOptionArray[j]] = [
+          tempOptionArray[j],
+          tempOptionArray[i],
+        ];
+      }
+    });
+    return tempOptionArray;
+  };
 
   const getQuiz = async (formValues: FormValuesTypes) => {
     const response = await getQuizQuestions(formValues, token);
@@ -66,20 +96,19 @@ const QuizSetup = () => {
     response?.data.results.map((item: any) => {
       let options = [...item.incorrect_answers];
       options.push(item.correct_answer);
-      let tempObj: StructuredQuestionType = {
+      const response = structureOption(options);
+      let tempQuestion: Question = {
         question: item.question,
-        option: [...options],
+        questionId: nanoid(),
+      };
+      let tempObj: StructuredQuestionType = {
+        question: tempQuestion,
+        option: [...response],
         correctAnswer: item.correct_answer,
         category: item.category,
         difficulty: item.difficulty,
         type: item.type,
       };
-      // value.question = item.question;
-      // value.option = [...options];
-      // value.correctAnswer = item.correct_answer;
-      // value.category = item.category;
-      // value.difficulty = item.difficulty;
-      // value.type = item.type;
       tempArray.push(tempObj);
     });
     console.log(tempArray);
