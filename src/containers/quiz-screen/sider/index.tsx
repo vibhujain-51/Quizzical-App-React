@@ -52,7 +52,11 @@ const QuizSider: FC<SiderPropsType> = (_props) => {
               {isSubmitted ? answerQuestions - totalCorrectAnswers : ""}
             </div>
           </div>
-          <div>QUIZ COMPLETED</div>
+          {isSubmitted ? (
+            <div className="quiz-status-wrapper">QUIZ COMPLETED</div>
+          ) : (
+            <></>
+          )}
         </div>
         <div className="submit-quiz-btn-container">
           <PrimaryButton

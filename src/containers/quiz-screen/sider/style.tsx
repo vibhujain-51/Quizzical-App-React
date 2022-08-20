@@ -23,7 +23,7 @@ export const QuizSiderContainer = styled.div`
     .questions-progress-container {
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
+      align-items: center;
       gap: 45px;
       font-size: 20px;
       margin-top: 15px;
@@ -36,6 +36,24 @@ export const QuizSiderContainer = styled.div`
         padding: 10px 5px;
         .question-count-text {
           color: #f2ff43;
+        }
+      }
+      .quiz-status-wrapper {
+        color: red;
+        font-weight: 800;
+        text-align: center;
+        animation: blink-animation 1s linear infinite;
+      }
+
+      @keyframes blink-animation {
+        0% {
+          opacity: 0;
+        }
+        50% {
+          opacity: 0.5;
+        }
+        100% {
+          opacity: 1;
         }
       }
     }

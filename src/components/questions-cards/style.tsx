@@ -11,7 +11,7 @@ export const QuestionCardContainer = styled.div`
   .primary-card-content-container {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 25px;
     .question-wrapper {
       font-size: 20px;
       font-weight: 600;
@@ -54,17 +54,33 @@ export const QuestionCardContainer = styled.div`
 
     .question-meta-info-container {
       display: flex;
+      justify-content: flex-end;
+      width: 100%;
+      font-size: 12px;
       gap: 20px;
+      color: red;
       .category-wrapper {
-        font-size: 10px;
+        background-color: #28ff285f;
+        padding: 7px;
+        color: #ffffff;
+        font-weight: 600;
+        border-radius: 15px;
       }
 
       .difficulty-wrapper {
-        font-size: 10px;
+        background-color: #2845ff5f;
+        padding: 7px;
+        color: #ffffff;
+        font-weight: 600;
+        border-radius: 15px;
       }
 
       .type-wrapper {
-        font-size: 10px;
+        background-color: #ff28cd5f;
+        padding: 7px;
+        color: #ffffff;
+        font-weight: 600;
+        border-radius: 15px;
       }
     }
   }

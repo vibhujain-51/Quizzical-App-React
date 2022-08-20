@@ -107,13 +107,20 @@ const QuestionCard: FC<QuestionCardProps> = (_props) => {
           })}
         </div>
         <div className="question-meta-info-container">
-          <div className="category-wrapper">Category: {category}</div>
-          <div className="difficulty-wrapper">
-            Difficulty:&nbsp;
-            {difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}
+          <div>
+            Category: <span className="category-wrapper">{category}</span>
           </div>
-          <div className="type-wrapper">
-            Type: {type === "boolean" ? "True/False" : "Multiple Choice"}
+          <div>
+            Difficulty:&nbsp;
+            <span className="difficulty-wrapper">
+              {difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}
+            </span>
+          </div>
+          <div>
+            Type:&nbsp;
+            <span className="type-wrapper">
+              {type === "boolean" ? "True/False" : "Multiple Choice"}
+            </span>
           </div>
         </div>
       </div>
