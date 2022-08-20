@@ -84,7 +84,7 @@ const QuestionCard: FC<QuestionCardProps> = (_props) => {
     <QuestionCardContainer>
       <div className="primary-card-content-container">
         <div className="question-wrapper">
-          Q{questionNumber}. {parse(`${question.question}`)}
+          Q {questionNumber}. {parse(`${question.question}`)}
         </div>
         <div className="option-container">
           {option.map((item, index) => {
