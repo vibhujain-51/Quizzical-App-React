@@ -54,7 +54,7 @@ export const ApplicationContextProvider: FC<ApplicationContextPropsType> = (
       setToken(response.data.token);
       if (token !== "") return true;
     } else {
-      alert("Failed To Fetch Token!!`");
+      alert("Failed To Refresh Token!!`");
       return false;
     }
   };

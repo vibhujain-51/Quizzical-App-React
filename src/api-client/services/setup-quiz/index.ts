@@ -75,7 +75,7 @@ const getOnlyQuestion = async(tokenUrl:string,
         
         const url = ApiEndPoints.QuizSetup.getQuizWithOnlyQuestionUrl(numOfQuestions);
         const response = await apiClientServices.get(`${secondaryBaseUrl}${url}${tokenUrl}`);
-        if(response.data.response_code===0){return response}
+        return response
         
     }
 
@@ -108,7 +108,7 @@ const getQuestionWithCategoryAndDifficulty = async(tokenUrl:string,
     secondaryBaseUrl:string,numOfQuestions:number,questionCategory:string,questionDifficulty:string)=>{
         console.log("with category and difficulty");
         const url = ApiEndPoints.QuizSetup.getQuizWithQuestionCategoryAndDifficultyUrl(numOfQuestions,questionCategory,questionDifficulty);
-        const response = apiClientServices.get(`${secondaryBaseUrl}${url}${tokenUrl}`)
+        const response = await apiClientServices.get(`${secondaryBaseUrl}${url}${tokenUrl}`)
         return response
     }
 
@@ -116,7 +116,7 @@ const getQuestionWithDifficultyAndType = async(tokenUrl:string,
     secondaryBaseUrl:string,numOfQuestions:number,questionDifficulty:string,questionsType:string)=>{
         console.log("with difficulty and type");
         const url = ApiEndPoints.QuizSetup.getQuizWithQuestionDifficultyAndTypeUrl(numOfQuestions,questionDifficulty,questionsType);
-        const response = apiClientServices.get(`${secondaryBaseUrl}${url}${tokenUrl}`)
+        const response = await apiClientServices.get(`${secondaryBaseUrl}${url}${tokenUrl}`)
         return response
     }
 
@@ -124,15 +124,15 @@ const getQuestionWithCategoryAndType = async(tokenUrl:string,
     secondaryBaseUrl:string,numOfQuestions:number,questionCategory:string,questionsType:string)=>{
         console.log("with category and type");
         const url = ApiEndPoints.QuizSetup.getQuizWithQuestionCategoryAndTypeUrl(numOfQuestions,questionCategory,questionsType);
-        const response = apiClientServices.get(`${secondaryBaseUrl}${url}${tokenUrl}`)
-        return response
+        const response = await apiClientServices.get(`${secondaryBaseUrl}${url}${tokenUrl}`)
+         return response
     }
 
 const getQuestionWithEverything = async(tokenUrl:string,
     secondaryBaseUrl:string,numOfQuestions:number,questionCategory:string,questionDifficulty:string,questionsType:string)=>{
         console.log("with everything")
         const url = ApiEndPoints.QuizSetup.getQuizWithEveryFieldUrl(numOfQuestions,questionCategory,questionDifficulty,questionsType);
-        const response = apiClientServices.get(`${secondaryBaseUrl}${url}${tokenUrl}`)
-        return response
+        const response = await apiClientServices.get(`${secondaryBaseUrl}${url}${tokenUrl}`)
+         return response
 
     }

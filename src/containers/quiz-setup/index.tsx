@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import {
   getQuizQuestions,
   getSessionToken,
+  resetSessionToken,
 } from "../../api-client/services/setup-quiz";
 import PrimaryButton from "../../components/common/button";
 import { useApplicationContext } from "../../context/application-context";
@@ -46,7 +47,7 @@ export interface Question {
 
 const QuizSetup = () => {
   const navigate = useNavigate();
-  const { token } = useApplicationContext();
+  const { token, renewToken } = useApplicationContext();
   // const [structuredQuestions, setStructuredQuestions] = useState<
   //   StructuredQuestionType[]
   // >([value]);
@@ -89,9 +90,7 @@ const QuizSetup = () => {
     return tempOptionArray;
   };
 
-  const getQuiz = async (formValues: FormValuesTypes) => {
-    const response = await getQuizQuestions(formValues, token);
-    console.log(response);
+  const getQuizData = (response: any) => {
     let tempArray: StructuredQuestionType[] = [];
     response?.data.results.map((item: any) => {
       let options = [...item.incorrect_answers];
@@ -116,6 +115,30 @@ const QuizSetup = () => {
     return tempArray;
   };
 
+  const getQuiz = async (formValues: FormValuesTypes) => {
+    const response = await getQuizQuestions(formValues, token);
+    console.log(response);
+    if (response?.data.response_code === 0) {
+      const quizData = getQuizData(response);
+      return quizData;
+    }
+
+    if (response?.data.response_code === 1) {
+      alert("Please select less questions for this category!!");
+      return;
+    }
+
+    if (response?.data.response_code === 4) {
+      const isTokenRefreshed = await renewToken();
+      if (isTokenRefreshed) {
+        const response = await getQuizQuestions(formValues, token);
+        const quizData = getQuizData(response);
+        console.log(response);
+        return quizData;
+      }
+    }
+  };
+
   const handleOnChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     // console.log(e.target.value);
 
@@ -131,9 +154,9 @@ const QuizSetup = () => {
     const response = await getQuiz(formValues);
     // console.log(response);
     // console.log(response);
-    if (response) {
-      navigate("/main-quiz", { state: response });
-    }
+    // if (response) {
+    //   navigate("/main-quiz", { state: response });
+    // }
   };
 
   return (
