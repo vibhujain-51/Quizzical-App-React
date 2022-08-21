@@ -1,18 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { BottomBlueGraphics, TopYellowGraphics } from "../../assets/graphics";
 import PrimaryButton from "../../components/common/button";
+import Loader from "../../components/common/loader";
 import { useApplicationContext } from "../../context/application-context";
 import { WelcomeScreenContainer } from "./style";
 
 const WelcomeScreen = () => {
   const { getToken, token } = useApplicationContext();
   const navigate = useNavigate();
+  const [activateLoader, setActivateLoader] = useState(false);
 
   const handleStartQuiz = async () => {
     if (token === "") {
+      setActivateLoader(true);
       const response = await getToken();
       if (response) {
+        setActivateLoader(false);
         navigate("quiz-setup");
       }
     } else {
@@ -22,6 +26,7 @@ const WelcomeScreen = () => {
 
   return (
     <WelcomeScreenContainer>
+      <Loader activate={activateLoader} />
       <div className="welcome-screen-primary-wrapper">
         <div className="top-graphic-wrapper">
           <TopYellowGraphics />

@@ -9,6 +9,7 @@ import {
 import { BackArrowFilledIcon } from "../../assets/icons/back-arrow-icon";
 
 import PrimaryButton from "../../components/common/button";
+import Loader from "../../components/common/loader";
 import { useApplicationContext } from "../../context/application-context";
 import { QuizSetupContainer } from "./style";
 
@@ -53,6 +54,7 @@ const QuizSetup = () => {
   // const [structuredQuestions, setStructuredQuestions] = useState<
   //   StructuredQuestionType[]
   // >([value]);
+  const [activateLoader, setActivateLoader] = useState(false);
 
   const initialFormValues: FormValuesTypes = {
     numberOfQuestions: 5,
@@ -153,10 +155,12 @@ const QuizSetup = () => {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
+    setActivateLoader(true);
     const response = await getQuiz(formValues);
     // console.log(response);
     // console.log(response);
     if (response) {
+      setActivateLoader(false);
       navigate("/main-quiz", { state: response });
     }
   };
@@ -167,6 +171,7 @@ const QuizSetup = () => {
 
   return (
     <QuizSetupContainer>
+      <Loader activate={activateLoader} />
       <div className="quiz-setup-primary-container">
         <div className="quiz-setup-heading-wrapper">
           <div className="back-arrow-wrapper" onClick={handleBackButton}>
