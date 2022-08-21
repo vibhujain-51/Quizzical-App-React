@@ -23,10 +23,13 @@ export const QuestionCardContainer = styled.div`
     .option-container {
       display: flex;
       flex-wrap: wrap;
+      /* justify-content: flex-start; */
+      /* align-items: flex-start; */
       gap: 30px;
       margin-left: 25px;
       @media only screen and (max-width: 908px) {
         font-size: 14px;
+        justify-content: center;
       }
       .option-wrapper {
         border: 1px solid #e66220;
@@ -36,6 +39,7 @@ export const QuestionCardContainer = styled.div`
         padding: 10px 20px;
         text-align: center;
         font-weight: 700;
+        min-width: 235px;
         cursor: pointer;
         transition: all 0.3s;
         :hover {

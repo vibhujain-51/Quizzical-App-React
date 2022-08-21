@@ -30,11 +30,17 @@ const QuizSider: FC<SiderPropsType> = (_props) => {
     navigate(-1);
   };
 
+  const handleGoToHome = () => {
+    navigate("/");
+  };
+
   return (
     <QuizSiderContainer>
       <div className="sider-primary-container">
         <div className="quiz-sider-header-container">
-          <div>{width > 700 ? "QUIZ" : "Q"}</div>
+          <div className="sider-app-name-wrapper" onClick={handleGoToHome}>
+            {width > 700 ? "QUIZ" : "Q"}
+          </div>
           <div className="back-btn-wrapper" onClick={handleBackButton}>
             <div className="sider-back-arrow-wrapper">
               <BackArrowLinedIcon />

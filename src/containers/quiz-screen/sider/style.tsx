@@ -19,6 +19,15 @@ export const QuizSiderContainer = styled.div`
       font-weight: 800;
       /* text-align: center; */
 
+      .sider-app-name-wrapper {
+        cursor: pointer;
+        transition: all 0.3s;
+
+        :hover {
+          transform: scale(1.05);
+        }
+      }
+
       .back-btn-wrapper {
         display: flex;
         align-items: center;
