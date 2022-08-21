@@ -15,12 +15,19 @@ export const QuestionCardContainer = styled.div`
     .question-wrapper {
       font-size: 20px;
       font-weight: 600;
+      @media only screen and (max-width: 908px) {
+        font-size: 18px;
+      }
     }
 
     .option-container {
       display: flex;
+      flex-wrap: wrap;
       gap: 30px;
       margin-left: 25px;
+      @media only screen and (max-width: 908px) {
+        font-size: 14px;
+      }
       .option-wrapper {
         border: 1px solid #e66220;
         background-color: #f2ff43;
@@ -55,6 +62,7 @@ export const QuestionCardContainer = styled.div`
     .question-meta-info-container {
       display: flex;
       justify-content: flex-end;
+      flex-wrap: wrap;
       width: 100%;
       font-size: 12px;
       gap: 20px;
@@ -81,6 +89,12 @@ export const QuestionCardContainer = styled.div`
         color: #ffffff;
         font-weight: 600;
         border-radius: 15px;
+      }
+      @media only screen and (max-width: 750px) {
+        margin-top: 10px;
+        gap: 30px 20px;
+        font-size: 10px;
+        justify-content: flex-start;
       }
     }
   }

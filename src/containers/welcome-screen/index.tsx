@@ -6,12 +6,16 @@ import { useApplicationContext } from "../../context/application-context";
 import { WelcomeScreenContainer } from "./style";
 
 const WelcomeScreen = () => {
-  const { getToken } = useApplicationContext();
+  const { getToken, token } = useApplicationContext();
   const navigate = useNavigate();
 
   const handleStartQuiz = async () => {
-    const response = await getToken();
-    if (response) {
+    if (token === "") {
+      const response = await getToken();
+      if (response) {
+        navigate("quiz-setup");
+      }
+    } else {
       navigate("quiz-setup");
     }
   };

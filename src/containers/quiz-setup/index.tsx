@@ -6,6 +6,8 @@ import {
   getSessionToken,
   resetSessionToken,
 } from "../../api-client/services/setup-quiz";
+import { BackArrowFilledIcon } from "../../assets/icons/back-arrow-icon";
+
 import PrimaryButton from "../../components/common/button";
 import { useApplicationContext } from "../../context/application-context";
 import { QuizSetupContainer } from "./style";
@@ -110,14 +112,14 @@ const QuizSetup = () => {
       };
       tempArray.push(tempObj);
     });
-    console.log(tempArray);
+    // console.log(tempArray);
     // await setStructuredQuestions(tempArray);
     return tempArray;
   };
 
   const getQuiz = async (formValues: FormValuesTypes) => {
     const response = await getQuizQuestions(formValues, token);
-    console.log(response);
+    // console.log(response);
     if (response?.data.response_code === 0) {
       const quizData = getQuizData(response);
       return quizData;
@@ -133,7 +135,7 @@ const QuizSetup = () => {
       if (isTokenRefreshed) {
         const response = await getQuizQuestions(formValues, token);
         const quizData = getQuizData(response);
-        console.log(response);
+        // console.log(response);
         return quizData;
       }
     }
@@ -159,10 +161,19 @@ const QuizSetup = () => {
     }
   };
 
+  const handleBackButton = () => {
+    navigate(-1);
+  };
+
   return (
     <QuizSetupContainer>
       <div className="quiz-setup-primary-container">
-        <div className="quiz-setup-heading-wrapper">QUIZ SETUP</div>
+        <div className="quiz-setup-heading-wrapper">
+          <div className="back-arrow-wrapper" onClick={handleBackButton}>
+            <BackArrowFilledIcon />
+          </div>
+          <div>QUIZ SETUP</div>
+        </div>
         <form>
           <div className="form-items-container">
             <div className="form-items-wrapper number-of-questions-wrapper">

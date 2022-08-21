@@ -34,52 +34,55 @@ const MainQuiz = () => {
     navigate(-1);
   };
 
-  // useEffect(() => {
-  //   if (!token) {
-  //     navigate(-2);
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (!token) {
+      navigate(-2);
+    }
+  }, []);
 
   const totalQuestion: number = quizQuestions.length;
   const answerQuestions: number = questionsMarked.length;
 
   return (
     <MainQuizContainer>
-      {isSubmitted ? (
-        <div>
-          <Confetti width={width - 10} height={height - 10} />
-        </div>
-      ) : (
-        <></>
-      )}
+      <div className="quiz-primary-container">
+        {isSubmitted ? (
+          <div>
+            <Confetti width={width - 10} height={height - 10} />
+          </div>
+        ) : (
+          <></>
+        )}
 
-      <div className="primary-quiz-sider-container">
-        <QuizSider
-          handleSubmitQuiz={handleSubmitQuiz}
-          handleNewQuiz={handleNewQuiz}
-          isSubmitted={isSubmitted}
-          totalQuestion={totalQuestion}
-          answerQuestions={answerQuestions}
-          totalCorrectAnswers={totalCorrectAnswers}
-        />
-      </div>
-      <div className="quiz-content-primary-container">
-        <div className="primary-questions-container">
-          {quizQuestions.map((item: StructuredQuestionType, index: number) => {
-            return (
-              <QuestionCard
-                key={index}
-                quizQuestions={item}
-                isSubmitted={isSubmitted}
-                questionNumber={index + 1}
-                questionsMarked={questionsMarked}
-                setQuestionsMarked={setQuestionsMarked}
-                setTotalCorrectAnswers={setTotalCorrectAnswers}
-              />
-            );
-          })}
+        <div className="primary-quiz-sider-container">
+          <QuizSider
+            handleSubmitQuiz={handleSubmitQuiz}
+            handleNewQuiz={handleNewQuiz}
+            isSubmitted={isSubmitted}
+            totalQuestion={totalQuestion}
+            answerQuestions={answerQuestions}
+            totalCorrectAnswers={totalCorrectAnswers}
+          />
         </div>
-        {/* <div className="submit-quiz-btn-container">
+        <div className="quiz-content-primary-container">
+          <div className="primary-questions-container">
+            {quizQuestions.map(
+              (item: StructuredQuestionType, index: number) => {
+                return (
+                  <QuestionCard
+                    key={index}
+                    quizQuestions={item}
+                    isSubmitted={isSubmitted}
+                    questionNumber={index + 1}
+                    questionsMarked={questionsMarked}
+                    setQuestionsMarked={setQuestionsMarked}
+                    setTotalCorrectAnswers={setTotalCorrectAnswers}
+                  />
+                );
+              }
+            )}
+          </div>
+          {/* <div className="submit-quiz-btn-container">
           <PrimaryButton
             text={isSubmitted ? "Start New Quiz" : "Submit Quiz"}
             backgroundColor="#f2ff43"
@@ -92,6 +95,7 @@ const MainQuiz = () => {
             onClick={isSubmitted ? handleNewQuiz : handleSubmitQuiz}
           />
         </div> */}
+        </div>
       </div>
     </MainQuizContainer>
   );

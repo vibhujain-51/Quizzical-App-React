@@ -17,12 +17,36 @@ export const QuizSetupContainer = styled.div`
 
     .quiz-setup-heading-wrapper {
       color: #e66220;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-size: 80px;
       font-weight: 800;
-      align-self: center;
+      gap: 30px;
       margin: 5px 0px -40px 0px;
-      @media only screen and (max-width: 530px) {
+
+      .back-arrow-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s;
+        z-index: 99;
+        margin-top: 10px;
+        /* width: fit-content; */
+        :hover {
+          transform: scale(1.2);
+        }
+      }
+
+      @media only screen and (max-width: 584px) {
         font-size: 60px;
+      }
+      @media only screen and (max-width: 484px) {
+        font-size: 50px;
+      }
+      @media only screen and (max-width: 385px) {
+        font-size: 40px;
       }
     }
 
