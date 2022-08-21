@@ -71,6 +71,7 @@ export const MainQuizContainer = styled.div`
       }
       @media only screen and (max-width: 700px) {
         width: 96%;
+        height: calc(100vh - 145px);
       }
     }
 
